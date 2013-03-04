@@ -21,12 +21,18 @@ public class MainActivity extends Activity {
 		try {
 			System.out.println("Run In WebViewSession");
 			
+			CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(MainActivity.this);
+			cookieSyncManager.sync();
+			CookieManager cookieManager = CookieManager.getInstance();
+			cookieManager.setCookie("http://aoi.androidesk.com", "session_id=\"MDVjNTZmNTA0YzJhMGQ0MDEzMTQ0MWUyMWFiZDg4ZTViNzQ3NzMwMQ==|1362371420|b9cf026fa9b0a17edd31500fcdffe14b868e0a29\"");
+			CookieSyncManager.getInstance().sync();
+			
 			WebViewSubView webViewSubView = new WebViewSubView();
 			webViewSubView.setCallbackMethod(callbackMethod);
 			myWebView = (WebView)findViewById(R.id.webview);
 			myWebView.getSettings().setJavaScriptEnabled(true);
 			myWebView.setWebViewClient(webViewSubView);
-			myWebView.loadUrl("http://aoi.androidesk.com/personal");
+			myWebView.loadUrl("http://aoi.androidesk.com/personal");///personal
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -36,16 +42,15 @@ public class MainActivity extends Activity {
 
 	public CallbackMethod callbackMethod = new CallbackMethod() {
 		
-		@Override
+		@Override 
 		public void showCookie() {
 			// TODO Auto-generated method stub
 			CookieSyncManager cookieSyncManager = CookieSyncManager.createInstance(MainActivity.this);
 			cookieSyncManager.sync();
 			CookieManager cookieManager = CookieManager.getInstance();
-			System.out.println(cookieManager.getCookie("http://aoi.androidesk.com/personal"));
-			cookieManager.removeSessionCookie();
+			System.out.println(cookieManager.getCookie("http://aoi.androidesk.com"));///personal
+			//cookieManager.removeSessionCookie();
+			cookieManager.removeAllCookie();
 		}
 	};
-	
-	
 }
